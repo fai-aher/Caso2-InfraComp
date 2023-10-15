@@ -56,27 +56,37 @@ public class Configuracion {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Digite el tamano de pagina:");
-		int tamPagina = sc.nextInt();
+        System.out.println("Digite el tamaño de página:");
+        int tamPagina = sc.nextInt();
 
-		System.out.println("Digite el numero deseado de filas para las matrices:");
-		numeroFilas = sc.nextInt();
+        System.out.println("Digite el número deseado de filas para las matrices:");
+        int numeroFilas = sc.nextInt();
 
-        System.out.println("Digite el numero deseado de columnas para las matrices:");
-		numeroColumnas = sc.nextInt();
+        System.out.println("Digite el número deseado de columnas para las matrices:");
+        int numeroColumnas = sc.nextInt();
 
         try {
-            int TP = tamPagina;
-            int NF = numeroFilas;
-            int NC1 = numeroColumnas;
-            int NC2 = numeroColumnas;
-            int NR = calcularNumeroDeReferencias(TP, NF, NC1, NC2);
-            int NP = calcularNumeroDePaginas(TP, NF, NC1, NC2);
+            int NR = calcularNumeroDeReferencias(tamPagina, numeroFilas, numeroColumnas, numeroColumnas);
+            int NP = calcularNumeroDePaginas(tamPagina, numeroFilas, numeroColumnas, numeroColumnas);
 
-            // Aquí se crea un archivo 
+            // Aquí puedes crear un archivo y escribir los datos antes de las referencias.
             BufferedWriter writer = new BufferedWriter(new FileWriter("referencias.txt"));
-            writer.write("TP:" + TP + ", NF:" + NF + ", NC1:" + NC1 + ", NC2:" + NC2 + ", NR:" + NR + ", NP:" + NP);
+            writer.write("TP=" + tamPagina);
             writer.newLine();
+            writer.write("NF=" + numeroFilas);
+            writer.newLine();
+            writer.write("NC=" + numeroColumnas);
+            writer.newLine();
+            writer.write("NR=" + NR);
+            writer.newLine();
+
+           
+            for (int i = 0; i < NR; i++) {
+        
+                String referencia = generarReferencia(i);
+                writer.write(referencia);
+                writer.newLine();
+            }
 
             writer.close();
 
@@ -91,7 +101,6 @@ public class Configuracion {
     }
 
 
-
     public int calcularNumeroDeReferencias(int tamPagina, int NF, int NC1, int NC2){
         return 0;
     }
@@ -100,5 +109,15 @@ public class Configuracion {
         return 0; 
     }
 
+    private String generarReferencia(int i) {
+        String matriz = (i % 3 == 0) ? "A" : (i % 3 == 1) ? "B" : "C";
+        int pagina = i / 3;
+        int fila = (pagina % 8) * 4;
+        int columna = (pagina / 8) * 4;
+
+        return String.format("[%s-%d-%d],%d,%d", matriz, fila, columna, pagina, i);
+    }
+
+    
 
 }
