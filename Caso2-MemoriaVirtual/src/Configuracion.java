@@ -69,7 +69,6 @@ public class Configuracion {
             int NR = calcularNumeroDeReferencias(tamPagina, numeroFilas, numeroColumnas, numeroColumnas);
             int NP = calcularNumeroDePaginas(tamPagina, numeroFilas, numeroColumnas, numeroColumnas);
 
-            // Aquí puedes crear un archivo y escribir los datos antes de las referencias.
             BufferedWriter writer = new BufferedWriter(new FileWriter("referencias.txt"));
             writer.write("TP=" + tamPagina);
             writer.newLine();
@@ -117,7 +116,5 @@ public class Configuracion {
 
         return String.format("[%s-%d-%d],%d,%d", matriz, fila, columna, pagina, i);
     }
-
-    
 
 }
