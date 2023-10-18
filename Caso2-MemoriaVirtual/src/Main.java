@@ -17,10 +17,10 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         while(true){
-            
+
             System.out.println("Cual modo de programa desea ejecutar?");
-            System.out.println("Digite 1 para el primer modo");
-            System.out.println("Digite 2 para el segundo modo");
+            System.out.println("Digite 1 para el primer modo (Generacion de referencias)");
+            System.out.println("Digite 2 para el segundo modo(Numero de fallas)");
 
             int modo = sc.nextInt();
 
