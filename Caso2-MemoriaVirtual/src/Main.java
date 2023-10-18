@@ -60,10 +60,14 @@ public class Main {
     }
 
     public static void generarReferencias(int tp, int nf, int nc1, int nc2) {
-        int numReferences = nf * nc1 * nc2;
-        int numPages = (numReferences * 4) / tp;
+        int numReferences = (nf*nc2)*(nc1*2+1);
+        int numPages = 4*(nc1*nf + nc1*nc2 + nc2*nf) / tp;
 
         try {
+
+
+            
+
             FileWriter fileWriter = new FileWriter("referencias.txt");
             fileWriter.write("TP=" + tp + "\n");
             fileWriter.write("NF=" + nf + "\n");
@@ -72,23 +76,20 @@ public class Main {
             fileWriter.write("NR=" + numReferences + "\n");
             fileWriter.write("NP=" + numPages + "\n");
 
-            for (int i = 0; i < nf; i++) {
-                for (int j = 0; j < nc1; j++) {
-                    String referenceA = "[A-" + i + "-" + j + "], " + (i * nc1 * 4) + ", " + (j * 4);
-                    fileWriter.write(referenceA + "\n");
-                }
-            }
-
-            for (int j = 0; j < nc1; j++) {
-                for (int k = 0; k < nc2; k++) {
-                    String referenceB = "[B-" + j + "-" + k + "], " + (j * nc2 * 4) + ", " + (k * 4);
-                    fileWriter.write(referenceB + "\n");
-                }
-            }
+            Matriz A = new Matriz (nf,nc1,tp);
+            Matriz B = new Matriz (nc1,nc2,tp);
+            Matriz C = new Matriz (nf,nc2,tp);
 
             for (int i = 0; i < nf; i++) {
-                for (int k = 0; k < nc2; k++) {
-                    String referenceC = "[C-" + i + "-" + k + "], " + (i * nc2 * 4) + ", " + (k * 4);
+                for (int j = 0; j < nc2; j++) {
+                    for (int k = 0; k < nc1; k++) {
+                        String referenceA = "[A-" + i + "-" + k + "], " + A.obtenerPaginaYDesplazamiento(i, k);
+                        fileWriter.write(referenceA + "\n");
+
+                        String referenceB = "[B-" + k + "-" + j + "], " + B.obtenerPaginaYDesplazamiento(k,j);
+                        fileWriter.write(referenceB + "\n");
+                    }
+                    String referenceC = "[C-" + i + "-" + j + "], " + C.obtenerPaginaYDesplazamiento(i, j);
                     fileWriter.write(referenceC + "\n");
                 }
             }
