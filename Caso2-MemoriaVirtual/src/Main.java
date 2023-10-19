@@ -58,8 +58,9 @@ public class Main {
     }
 
     public static void generarReferencias(int tp, int nf, int nc1, int nc2) {
-        int numReferences = (nf*nc2)*(nc1*2+1);
+        
         int numPages = 4*(nc1*nf + nc1*nc2 + nc2*nf) / tp;
+        int numReferences = (nf*nc2)*(nc1*2+1);
 
         try {
 
@@ -71,42 +72,25 @@ public class Main {
             fileWriter.write("NR=" + numReferences + "\n");
             fileWriter.write("NP=" + numPages + "\n");
 
-            // Matriz A = new Matriz (nf,nc1,tp);
-            // Matriz B = new Matriz (nc1,nc2,tp);
-            // Matriz C = new Matriz (nf,nc2,tp);
 
             MatrizPrueba A = new MatrizPrueba (nf,nc1,tp);
             MatrizPrueba B = new MatrizPrueba (nc1,nc2,tp);
             MatrizPrueba C = new MatrizPrueba (nf,nc2,tp);
 
-            // for (int i = 0; i < nf; i++) {
-            //     for (int j = 0; j < nc2; j++) {
-            //         for (int k = 0; k < nc1; k++) {
-            //             String referenceA = "[A-" + i + "-" + k + "], " + A.obtenerPaginaYDesplazamiento(i, k);
-            //             fileWriter.write(referenceA + "\n");
-
-            //             String referenceB = "[B-" + k + "-" + j + "], " + B.obtenerPaginaYDesplazamiento(k,j);
-            //             fileWriter.write(referenceB + "\n");
-            //         }
-            //         String referenceC = "[C-" + i + "-" + j + "], " + C.obtenerPaginaYDesplazamiento(i, j);
-            //         fileWriter.write(referenceC + "\n");
-            //     }
-            // }
 
             for (int i = 0; i < nf; i++) {
                 for (int j = 0; j < nc2; j++) {
                     for (int k = 0; k < nc1; k++) {
-                        String referenceA = "[A-" + i + "-" + k + "], " + A.darPaginaYDesplazamiento(i, k);
+                        String referenceA = "[A-" + i + "-" + k + "], " + A.valoresRespuesta(i, k);
                         fileWriter.write(referenceA + "\n");
 
-                        String referenceB = "[B-" + k + "-" + j + "], " + B.darPaginaYDesplazamiento(k,j);
+                        String referenceB = "[B-" + k + "-" + j + "], " + B.valoresRespuesta(k,j);
                         fileWriter.write(referenceB + "\n");
                     }
-                    String referenceC = "[C-" + i + "-" + j + "], " + C.darPaginaYDesplazamiento(i, j);
+                    String referenceC = "[C-" + i + "-" + j + "], " + C.valoresRespuesta(i, j);
                     fileWriter.write(referenceC + "\n");
                 }
             }
-
 
             fileWriter.close();
             System.out.println("Referencias generadas y guardadas en referencias.txt");

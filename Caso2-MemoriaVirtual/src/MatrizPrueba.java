@@ -1,37 +1,38 @@
 public class MatrizPrueba {
 
-    private int filas;
-    private int columnas;
-    private String[][] M;
-    private static int tamanioPagina;
-    private static int desplazamiento = 0;
-    private static int numPaginaActual = 0;
+    private String[][] matrix;
+    private static int tp;
+   
 
-    public MatrizPrueba(int pFilas, int pColumnas, int tamPagina) {
-        this.filas = pFilas;
-        this.columnas = pColumnas;
-        tamanioPagina = tamPagina;
-        M = new String[filas][columnas];
-        llenarMatriz();
-    }
+    private int matrixRows;
+    private int matrixColumns;
 
+    private static int desplazamientoPagina = 0;
+    private static int numPagina = 0;
 
-    public void llenarMatriz() {
-        for (int i=0; i<filas; i++) {
-            for (int j=0; j<columnas; j++) {
-                M[i][j] = Integer.toString(numPaginaActual) + ", " + Integer.toString(desplazamiento);
-                desplazamiento += 4;
-                if (desplazamiento >= tamanioPagina) {
-                    numPaginaActual ++;
-                    desplazamiento = 0;
+     public void generarMatriz() {
+        for (int i=0; i<matrixRows; i++) {
+            for (int j=0; j<matrixColumns; j++) {
+                matrix[i][j] = Integer.toString(numPagina) + ", " + Integer.toString(desplazamientoPagina);
+                desplazamientoPagina += 4;
+                if (desplazamientoPagina >= tp) {
+                    numPagina ++;
+                    desplazamientoPagina = 0;
                 }
             }
         }
+    }   
+
+    public String valoresRespuesta(int i, int j) {
+        return matrix[i][j];
     }
 
-    public String darPaginaYDesplazamiento(int i, int j) {
-        return M[i][j];
+     public MatrizPrueba(int pMatrixRows, int pMatrixColumns, int pTp) {
+        this.matrixRows = pMatrixRows;
+        this.matrixColumns = pMatrixColumns;
+        tp = pTp;
+        matrix = new String[matrixRows][matrixColumns];
+        generarMatriz();
     }
-
 
 }
