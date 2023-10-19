@@ -74,10 +74,13 @@ public class SimuladorMemoriaVirtual {
                 fallosPagina++;
                 System.out.println("\nFallo de página para página virtual " + paginaVirtual);
                 
+                // Esta parte se encarga de agregar un nuevo marco de memoria si aún no se han llenado todos los marcos.
+                // Para ello, se agrega un nuevo marco a la lista de marcos y se agrega la página virtual a la tabla de páginas.
                 if (marcos.size() < cantidadMarcos) {
                     int nuevoMarco = marcos.size();
                     marcos.add(nuevoMarco);
                     tablaPaginas.put(paginaVirtual, nuevoMarco);
+                    // En esta linea, se inicializa la edad del marco en 0
                     edadesMarcos.put(nuevoMarco, (byte) 0); 
                 } else {
                     int marcoReemplazar = obtenerMarcoMasAntiguo();
@@ -86,6 +89,7 @@ public class SimuladorMemoriaVirtual {
                         .map(Map.Entry::getKey)
                         .findFirst().orElse(-1);
                     
+                    // Aqui, se elimina la página virtual expulsada de la tabla de páginas y se agrega la nueva página virtual.
                     if (paginaVirtualExpulsada != -1) {
                         tablaPaginas.remove(paginaVirtualExpulsada);
                     }
@@ -129,7 +133,9 @@ public class SimuladorMemoriaVirtual {
             if (tablaPaginas.containsKey(paginaVirtual)) {
                 int marco = tablaPaginas.get(paginaVirtual);
                 byte edadAntigua = edadesMarcos.get(marco);
-                byte edadNueva = (byte) (edadAntigua | 0b10000000); // Establecer el bit más significativo en 1
+                // Se define el bit más significativo como 1 para indicar que se accedió a la página
+                // De esta forma, el método obtenerMarcoMasAntiguo puede determinar luego cuál es el marco más antiguo.
+                byte edadNueva = (byte) (edadAntigua | 0b10000000);
                 edadesMarcos.put(marco, edadNueva);
             }
         }
