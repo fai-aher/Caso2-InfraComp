@@ -76,7 +76,7 @@ public class SimuladorMemoriaVirtual {
                     }
                     tablaPaginas.put(paginaVirtual, marcoReemplazar);
                     edadesMarcos.put(marcoReemplazar, (byte) 0); 
-                    System.out.println("Página virtual" + paginaVirtualExpulsada + "expulsada del marco " + marcoReemplazar);
+                    System.out.println("Página virtual " + paginaVirtualExpulsada + " expulsada del marco " + marcoReemplazar);
                 }
             }
             System.out.println("Referencia a página virtual " + paginaVirtual + " mapeada al marco " + tablaPaginas.get(paginaVirtual));
