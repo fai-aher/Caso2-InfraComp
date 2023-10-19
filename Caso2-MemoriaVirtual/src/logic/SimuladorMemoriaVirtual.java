@@ -14,7 +14,7 @@ public class SimuladorMemoriaVirtual {
     private HashMap<Integer, Integer> tablaPaginas = new HashMap<>();
     private LinkedList<Integer> marcos = new LinkedList<>();
     private HashMap<Integer, Byte> edadesMarcos = new HashMap<>();
-    private List<Reference> referencias = new ArrayList<>();
+    private List<Referencia> referencias = new ArrayList<>();
     private int fallosPagina = 0;
 
     public SimuladorMemoriaVirtual(int cantidadMarcos, String nombreArchivoReferencias) throws IOException {
@@ -56,7 +56,7 @@ public class SimuladorMemoriaVirtual {
                     String[] partes = linea.split(",");
                     int paginaVirtual = Integer.parseInt(partes[1]);
                     int desplazamiento = Integer.parseInt(partes[2]);
-                    referencias.add(new Reference(paginaVirtual, desplazamiento));
+                    referencias.add(new Referencia(paginaVirtual, desplazamiento));
                 }
             }
         }
@@ -68,8 +68,8 @@ public class SimuladorMemoriaVirtual {
     // 3.Algoritmo Aging
 
     private synchronized void actualizarPaginasYMarcos() {
-        for (Reference ref : referencias) {
-            int paginaVirtual = ref.getVirtualPage();
+        for (Referencia ref : referencias) {
+            int paginaVirtual = ref.getPaginaVirtual();
             if (!tablaPaginas.containsKey(paginaVirtual)) {
                 fallosPagina++;
                 System.out.println("\nFallo de página para página virtual " + paginaVirtual);
@@ -128,8 +128,8 @@ public class SimuladorMemoriaVirtual {
         }
 
         // 2. Comprobar referencias y establecer el bit más significativo si se accedió a la página
-        for (Reference ref : referencias) {
-            int paginaVirtual = ref.getVirtualPage();
+        for (Referencia ref : referencias) {
+            int paginaVirtual = ref.getPaginaVirtual();
             if (tablaPaginas.containsKey(paginaVirtual)) {
                 int marco = tablaPaginas.get(paginaVirtual);
                 byte edadAntigua = edadesMarcos.get(marco);

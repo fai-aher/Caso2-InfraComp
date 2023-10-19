@@ -14,6 +14,8 @@ import logic.SimuladorMemoriaVirtual;
 
 public class Main {
 
+    // Estos atributos se usan para almacenar los datos que se leen del archivo de referencias para que el usuario revise que
+    // los datos se cargaron correctamente. Luego se leen también las referencias para ejecutar el programa Simulador de Memoria Virtual.
     private static int tp;
     private static int nf;
     private static int nc1;
@@ -24,6 +26,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input;
 
+        // En este ciclo while, se le pide al usuario que seleccione el modo de programa que desea ejecutar de los 2 disponibles.
         while(true){
             System.out.println("\n¿Cuál modo de programa desea ejecutar?:\n");
             System.out.println("1. Digite 1 para el primer modo (Generacion de archivo de referencias)");
@@ -124,7 +127,8 @@ public class Main {
             fileWriter.write("NR=" + numReferences + "\n");
             fileWriter.write("NP=" + numPages + "\n");
 
-
+            // Aquí, se crea una instancia de la clase MatrizPrueba, que se encarga de generar la matriz de páginas y desplazamientos.
+            // Con esas 3 matrices, se genera el archivo de referencias.
             MatrizPrueba A = new MatrizPrueba (nf,nc1,tp);
             MatrizPrueba B = new MatrizPrueba (nc1,nc2,tp);
             MatrizPrueba C = new MatrizPrueba (nf,nc2,tp);
