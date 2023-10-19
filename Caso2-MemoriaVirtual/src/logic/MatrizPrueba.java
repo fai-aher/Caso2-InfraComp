@@ -1,3 +1,5 @@
+package logic;
+
 public class MatrizPrueba {
 
     private String[][] matrix;
@@ -13,7 +15,7 @@ public class MatrizPrueba {
      public void generarMatriz() {
         for (int i=0; i<matrixRows; i++) {
             for (int j=0; j<matrixColumns; j++) {
-                matrix[i][j] = Integer.toString(numPagina) + ", " + Integer.toString(desplazamientoPagina);
+                matrix[i][j] = Integer.toString(numPagina) + "," + Integer.toString(desplazamientoPagina);
                 desplazamientoPagina += 4;
                 if (desplazamientoPagina >= tp) {
                     numPagina ++;
