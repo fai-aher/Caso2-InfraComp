@@ -21,13 +21,16 @@ public class SimuladorMemoriaVirtual {
         this.cantidadMarcos = cantidadMarcos;
         cargarArchivo(nombreArchivoReferencias);
 
-        // Hilos para simular los dos procesos
+        // Hilos para simular los dos procesos (Actualización - Aging)
+        // Se simplificó la creación de una clase separada para cada uno y se usó el operador colon para crear un objeto Runnable sobre los métodos que se ejecutarán en cada hilo.
         Thread hiloActualizacion = new Thread(this::actualizarPaginasYMarcos);
         Thread hiloAging = new Thread(this::algoritmoAging);
 
         hiloActualizacion.start();
         hiloAging.start();
+        long startTime = System.currentTimeMillis();
 
+        // Ejecución del método join sobre los 2 Threads para esperar a que acaben
         try {
             hiloActualizacion.join();
             hiloAging.join();
@@ -35,9 +38,16 @@ public class SimuladorMemoriaVirtual {
             e.printStackTrace();
         }
 
-        System.out.println("\nTotal de fallos de página: " + fallosPagina);
+        // Medición del tiempo que toma el programa en calcular los fallos de página según las especificaciones dads.
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        // Luego de que terminan, se imprime el resultado final.
+        System.out.println("\n>>En Total, se generaron " + fallosPagina +  " fallos de página.");
+        System.out.println("Tiempo total de ejecución: " + totalTime + " milisegundos.");
+
     }
 
+    // Para cumplir con la especificación (1) del modo 2, se simula la carga de referencias una por una.
     private void cargarArchivo(String nombreArchivo) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
@@ -51,6 +61,11 @@ public class SimuladorMemoriaVirtual {
             }
         }
     }
+
+    // Para cumplir con la especificación (2) del modo 2, se definieron los siguientes 3 métodos sincronizados:
+    // 1.Actualizar páginas y marcos
+    // 2.Obtener marco más antiguo
+    // 3.Algoritmo Aging
 
     private synchronized void actualizarPaginasYMarcos() {
         for (Reference ref : referencias) {
@@ -97,7 +112,10 @@ public class SimuladorMemoriaVirtual {
         return marcoMasAntiguo;
     }
 
-    synchronized void algoritmoAging() {
+    // El algoritmo Aging se encarga de actualizar las edades de los marcos de memoria y establecer el bit más significativo en 1 si se accedió a la página.
+    // Esto, con el objetivo de que el método obtenerMarcoMasAntiguo pueda determinar cuál es el marco más antiguo.
+
+    private synchronized void algoritmoAging() {
         // 1. Actualizar edades: Desplazar a la derecha la edad de cada marco
         for (Map.Entry<Integer, Byte> entry : edadesMarcos.entrySet()) {
             byte edadAntigua = entry.getValue();

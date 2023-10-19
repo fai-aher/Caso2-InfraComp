@@ -26,8 +26,8 @@ public class Main {
 
         while(true){
             System.out.println("\n¿Cuál modo de programa desea ejecutar?:\n");
-            System.out.println("1. Digite 1 para el primer modo (Generacion de referencias)");
-            System.out.println("2. Digite 2 para el segundo modo(Numero de fallas)\n");
+            System.out.println("1. Digite 1 para el primer modo (Generacion de archivo de referencias)");
+            System.out.println("2. Digite 2 para el segundo modo (Número de fallas de página)\n");
 
             System.out.printf("Opción seleccionada: ");
             input = scanner.nextLine().trim();
